@@ -14,6 +14,7 @@ sys.path.append("../tools/")
 from email_preprocess import preprocess
 
 
+
 ### features_train and features_test are the features for the training
 ### and testing datasets, respectively
 ### labels_train and labels_test are the corresponding item labels
@@ -24,8 +25,20 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+from sklearn import tree
+from sklearn.metrics import accuracy_score
 
+no_of_features = len(features_train[0])
 
+print "Number of Features:", no_of_features
+t0 = time()
+clf = tree.DecisionTreeClassifier(min_samples_split = 40, criterion = "entropy")
+clf.fit(features_train, labels_train)
+print "Training Time:", time()-t0
+pred = clf.predict(features_test)
+
+accuracy = accuracy_score(pred, labels_test)
+print accuracy
 #########################################################
 
 
